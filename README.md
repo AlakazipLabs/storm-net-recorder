@@ -210,6 +210,9 @@ Fully mocked: no network, no SDR, no whisper, no ffmpeg.
 ## License
 
 MIT — see [LICENSE](LICENSE).
+No strings beyond the license file, and no policing. If this saves you an
+afternoon, that is the whole point. Credit is appreciated and never demanded; if
+you build something better on top of it, that is the best outcome available.
 
 Amateur radio operation is subject to your own licensing and your local band plan.
 Recording and republishing net traffic is a courtesy question as much as a legal one;
