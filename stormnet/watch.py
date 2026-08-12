@@ -257,12 +257,29 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     if args.check:
-        print(f"OK: watching {cfg.lat},{cfg.lon} on {cfg.freq}")
-        print(f"    events:   {', '.join(sorted(cfg.trigger_events))}")
-        print(f"    notify:   {cfg.notify_mode}")
-        print(f"    home:     {cfg.home}")
-        print(f"    rtl_fm:   {cfg.rtl_fm}")
-        print(f"    whisper:  {cfg.whisper_bin}")
+        # Everything a live session needs, proven now rather than mid-warning.
+        problems = []
+        if not cfg.record_script.is_file():
+            problems.append(f"recorder script missing: {cfg.record_script}")
+        model = Path(cfg.whisper_model).expanduser()
+        if not model.is_file():
+            problems.append(f"whisper model not found: {model}")
+
+        print(f"watching {cfg.lat},{cfg.lon} on {cfg.freq}")
+        print(f"    events:    {', '.join(sorted(cfg.trigger_events))}")
+        print(f"    notify:    {cfg.notify_mode}")
+        print(f"    home:      {cfg.home}")
+        print(f"    rtl_fm:    {cfg.rtl_fm}")
+        print(f"    ffmpeg:    {cfg.ffmpeg}")
+        print(f"    whisper:   {cfg.whisper_bin}")
+        print(f"    model:     {model}")
+        print(f"    recorder:  {cfg.record_script}")
+        if problems:
+            print("\nNOT READY:", file=sys.stderr)
+            for p in problems:
+                print(f"  - {p}", file=sys.stderr)
+            return 1
+        print("\nOK — ready to record.")
         return 0
 
     Watcher(cfg).run()

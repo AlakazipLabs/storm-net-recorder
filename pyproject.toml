@@ -33,3 +33,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["stormnet"]
+
+# record.sh ships inside the package deliberately. The watcher spawns it by an
+# absolute path resolved from the module, so installing is the only step — there
+# is no copy for a user to forget, and no failure that waits for a storm.
+[tool.setuptools.package-data]
+stormnet = ["record.sh"]

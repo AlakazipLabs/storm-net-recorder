@@ -120,6 +120,47 @@ class TestDiscovery(unittest.TestCase):
             self.assertEqual(found, path)
 
 
+class TestRecordScript(unittest.TestCase):
+    """The recorder script must exist where the watcher will spawn it.
+
+    Regression: it used to resolve to <paths.home>/record.sh, which nothing ever
+    created. Install succeeded, config validated, and the failure waited for a
+    live warning to appear.
+    """
+
+    def test_shipped_script_exists(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg = cfgmod.load(write_cfg(tmp, MINIMAL), resolve_tools=False)
+            self.assertTrue(cfg.record_script.is_file(),
+                            f"recorder script missing: {cfg.record_script}")
+
+    def test_shipped_script_lives_inside_the_package(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg = cfgmod.load(write_cfg(tmp, MINIMAL), resolve_tools=False)
+            self.assertEqual(cfg.record_script.parent.name, "stormnet")
+
+    def test_shipped_script_is_a_shell_script(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg = cfgmod.load(write_cfg(tmp, MINIMAL), resolve_tools=False)
+            self.assertTrue(
+                cfg.record_script.read_text(encoding="utf-8").startswith("#!/bin/sh"))
+
+    def test_override_must_exist(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            body = MINIMAL + '\n[paths]\nrecord_script = "/nonexistent/record.sh"\n'
+            cfg = cfgmod.load(write_cfg(tmp, body), resolve_tools=False)
+            with self.assertRaises(cfgmod.ConfigError):
+                _ = cfg.record_script
+
+    def test_override_is_honored_when_present(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            custom = Path(tmp) / "mine.sh"
+            custom.write_text("#!/bin/sh\n", encoding="utf-8")
+            body = MINIMAL + f'\n[paths]\nrecord_script = "{custom}"\n'
+            cfg = cfgmod.load(write_cfg(tmp, body), resolve_tools=False)
+            self.assertEqual(cfg.record_script, custom)
+
+
 class TestToolResolution(unittest.TestCase):
     def test_missing_tool_is_actionable(self):
         with tempfile.TemporaryDirectory() as tmp:

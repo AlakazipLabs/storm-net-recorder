@@ -13,6 +13,24 @@ NWS alert poll ─▶ warning matches? ─▶ notify ─┐
                           end time + grace ◀───┘
 ```
 
+## Is this what you were looking for?
+
+Plain statements of what it does, in case you arrived here searching for one of them:
+
+- Automatically record a ham radio repeater when a severe weather warning is issued
+- Trigger an RTL-SDR recording from the NWS `api.weather.gov` alerts endpoint
+- Transcribe amateur radio net audio locally with whisper.cpp, offline
+- Get Whisper to stop mangling callsigns and local place names (seed the decoder — see
+  `whisper.vocab_prompt`)
+- Run `rtl_fm` unattended under launchd and have it stop by itself
+- Share one SDR dongle between a background service and your own listening, without
+  either killing the other
+- Find the right gain and squelch for a distant repeater by measurement rather than guesswork
+  (`tools/analyze_gain_ladder.py`)
+
+What it is **not**: a scanner, a decoder for digital modes, an APRS or SAME/EAS decoder, or
+anything that transmits. It listens to one analog FM frequency and writes text.
+
 ## Why this exists
 
 Storm nets happen exactly when you are busiest. The information on them — hail size at a

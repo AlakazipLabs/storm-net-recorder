@@ -122,6 +122,7 @@ class Config:
         self.home = Path(
             os.environ.get("STORMNET_HOME", paths.get("home", "~/.local/share/stormnet"))
         ).expanduser()
+        self._record_script_override = paths.get("record_script")
 
         notify = data.get("notify", {})
         self.notify_mode = str(notify.get("mode", "none"))
@@ -195,7 +196,23 @@ class Config:
 
     @property
     def record_script(self) -> Path:
-        return self.home / "record.sh"
+        """The recorder shell script.
+
+        Ships inside the package and is resolved relative to this module, so
+        installing the package is the only step — there is no copy for a user to
+        forget. Forgetting it used to mean the watcher spawned a file that was
+        never there, failing only once a warning fired.
+
+        Override with [paths].record_script if you have modified the chain.
+        """
+        if self._record_script_override:
+            path = Path(self._record_script_override).expanduser()
+            if not path.is_file():
+                raise ConfigError(
+                    f"[paths].record_script points at {path}, which does not exist"
+                )
+            return path
+        return Path(__file__).resolve().parent / "record.sh"
 
 
 def load(path: Path | None = None, resolve_tools: bool = True) -> Config:
