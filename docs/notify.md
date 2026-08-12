@@ -12,7 +12,7 @@ Identical in every mode:
   "source": "storm-net-recorder",
   "level": "warn",
   "title": "Severe Thunderstorm Warning — recording started",
-  "text": "Severe Thunderstorm Warning for Somewhere County\nUntil 18:00. Recording and transcribing 146.940M.\nTranscript: /home/you/.local/share/stormnet/transcripts/stormnet_2026-07-06.txt",
+  "text": "Severe Thunderstorm Warning for Somewhere County\nUntil 18:00. Recording and transcribing 147.180M.\nTranscript: /home/you/.local/share/stormnet/transcripts/stormnet_2026-07-06.txt",
   "ts": "2026-07-06T18:41:02.115377+00:00",
   "dedup_key": "stormnet:urn:oid:2.49.0.1.840.0.abc123"
 }

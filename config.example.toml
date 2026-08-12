@@ -28,7 +28,7 @@ http_timeout = 15
 
 [sdr]
 # The repeater output carrying your local SKYWARN or storm net.
-frequency = "146.940M"
+frequency = "147.180M"
 # gain/squelch are antenna- and site-specific. Measure them; don't inherit them.
 # tools/analyze_gain_ladder.py exists to find these numbers for your setup.
 gain = "42"

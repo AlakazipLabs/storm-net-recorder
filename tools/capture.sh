@@ -1,9 +1,9 @@
 #!/bin/sh
 # Capture a bounded audio sample for offline analysis.
 #
-#   sh tools/capture.sh 146.940M        # 30 s at the monitor profile
-#   sh tools/capture.sh 146.940M 60     # 60 s
-#   GAIN=34 sh tools/capture.sh 146.940M 20
+#   sh tools/capture.sh 147.180M        # 30 s at the monitor profile
+#   sh tools/capture.sh 147.180M 60     # 60 s
+#   GAIN=34 sh tools/capture.sh 147.180M 20
 #
 # Squelch defaults OFF here, unlike listening: a gain ladder or a denoiser has to
 # be judged on the hiss as well as the speech, and a gated capture of a quiet net
@@ -15,7 +15,7 @@
 
 set -u
 
-FREQ="${1:?usage: capture.sh <frequency, e.g. 146.940M> [seconds]}"
+FREQ="${1:?usage: capture.sh <frequency, e.g. 147.180M> [seconds]}"
 SECS="${2:-30}"
 RATE=24000
 BYTES=$((RATE * 2 * SECS))

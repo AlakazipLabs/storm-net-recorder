@@ -19,7 +19,7 @@ longitude = -97.3301
 contact = "you@example.com"
 
 [sdr]
-frequency = "146.940M"
+frequency = "147.180M"
 
 [whisper]
 model = "/tmp/model.bin"
@@ -36,7 +36,7 @@ class TestLoad(unittest.TestCase):
     def test_minimal_config_loads_with_defaults(self):
         with tempfile.TemporaryDirectory() as tmp:
             cfg = cfgmod.load(write_cfg(tmp, MINIMAL), resolve_tools=False)
-            self.assertEqual(cfg.freq, "146.940M")
+            self.assertEqual(cfg.freq, "147.180M")
             self.assertEqual(cfg.poll_secs, 120)
             self.assertEqual(cfg.notify_mode, "none")
             self.assertIn("Tornado Warning", cfg.trigger_events)
@@ -56,7 +56,7 @@ class TestLoad(unittest.TestCase):
 
     def test_missing_required_key_names_the_key(self):
         with tempfile.TemporaryDirectory() as tmp:
-            body = MINIMAL.replace('frequency = "146.940M"', "")
+            body = MINIMAL.replace('frequency = "147.180M"', "")
             with self.assertRaises(cfgmod.ConfigError) as ctx:
                 cfgmod.load(write_cfg(tmp, body), resolve_tools=False)
             self.assertIn("[sdr].frequency", str(ctx.exception))

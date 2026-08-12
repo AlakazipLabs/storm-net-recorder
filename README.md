@@ -138,7 +138,7 @@ measured starting point from one indoor antenna, not universal truth. Measure yo
 ## Listening by hand
 
 ```bash
-sh tools/listen.sh 146.940M monitor    # a distant repeater or net
+sh tools/listen.sh 147.180M monitor    # a distant repeater or net
 sh tools/listen.sh 162.475M wx         # NOAA weather broadcast
 sh tools/listen.sh 462.5625M           # a handheld a few feet away (default profile)
 ```

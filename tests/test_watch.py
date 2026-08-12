@@ -25,7 +25,7 @@ def fake_cfg(home: Path):
         http_timeout=15, poll_secs=120, grace_secs=120,
         trigger_events={"Severe Thunderstorm Warning": "warn",
                         "Tornado Warning": "crit"},
-        freq="146.940M", gain="42", squelch="50", sample_rate=24000,
+        freq="147.180M", gain="42", squelch="50", sample_rate=24000,
         rtl_fm="/usr/bin/rtl_fm", python="/usr/bin/python3",
         home=home,
         capture_dir=home / "captures",

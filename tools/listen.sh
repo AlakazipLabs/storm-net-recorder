@@ -1,7 +1,7 @@
 #!/bin/sh
 # Listen to a frequency through the SDR, live.
 #
-#   sh tools/listen.sh 146.940M monitor   # distant repeater / net traffic
+#   sh tools/listen.sh 147.180M monitor   # distant repeater / net traffic
 #   sh tools/listen.sh 162.475M wx        # NOAA weather broadcast
 #   sh tools/listen.sh 462.5625M          # a handheld a few feet away (default)
 #   sh tools/listen.sh 89.5M wbfm         # broadcast FM
@@ -25,7 +25,7 @@
 
 set -u
 
-FREQ="${1:?usage: listen.sh <frequency, e.g. 146.940M> [wx|monitor|voice|wbfm]}"
+FREQ="${1:?usage: listen.sh <frequency, e.g. 147.180M> [wx|monitor|voice|wbfm]}"
 MODE="${2:-voice}"
 GAIN="${GAIN:-}"
 SQL="${SQL:-}"
