@@ -1,0 +1,35 @@
+[project]
+name = "storm-net-recorder"
+version = "0.1.0"
+description = "Record and transcribe your local storm-spotter net automatically, driven by NWS warnings."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Michael Young" }]
+keywords = ["skywarn", "ham radio", "sdr", "rtl-sdr", "nws", "weather", "whisper", "transcription"]
+classifiers = [
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Communications :: Ham Radio",
+]
+# The daemon itself is pure standard library — urllib, json, wave, tomllib.
+# The heavy lifting is done by external binaries: rtl_fm, ffmpeg, whisper-cli.
+dependencies = []
+
+[project.optional-dependencies]
+# Only tools/analyze_gain_ladder.py needs this.
+tools = ["numpy"]
+
+[project.urls]
+Homepage = "https://github.com/young9898/storm-net-recorder"
+
+[project.scripts]
+stormnet-watch = "stormnet.watch:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["stormnet"]

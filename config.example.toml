@@ -1,0 +1,89 @@
+# storm-net-recorder — copy to config.toml and edit.
+#
+# Every value below is an example. The defaults describe a hypothetical spotter
+# in Wichita, Kansas monitoring a 2 m repeater; none of it will work unchanged.
+
+[location]
+# The point NWS alerts are checked against. Use the area you actually spot for.
+# Anything more precise than your town is unnecessary — the alert polygons are
+# county-to-neighborhood scale, and this value ends up in your config file.
+latitude = 37.6872
+longitude = -97.3301
+
+[nws]
+# api.weather.gov requires a contact address in the User-Agent. It is not
+# authentication; it is how NWS reaches you if your client misbehaves.
+contact = "you@example.com"
+poll_secs = 120          # NWS updates far slower than this; don't hammer it
+grace_secs = 120         # keep recording this long past the last warning's end
+http_timeout = 15
+
+# Which alerts start a recording, and how urgent the notification is.
+# Watches are deliberately absent: a watch means conditions are favorable, not
+# that a net is running. Add "Tornado Watch" here only if you want the tape
+# rolling for hours on spec.
+[nws.trigger_events]
+"Severe Thunderstorm Warning" = "warn"
+"Tornado Warning" = "crit"
+
+[sdr]
+# The repeater output carrying your local SKYWARN or storm net.
+frequency = "146.940M"
+# gain/squelch are antenna- and site-specific. Measure them; don't inherit them.
+# tools/analyze_gain_ladder.py exists to find these numbers for your setup.
+gain = "42"
+squelch = "50"
+sample_rate = 24000      # rtl_fm -s; must match what record.sh sends
+
+[audio]
+chunk_secs = 90          # audio seconds per transcription unit
+max_wall_secs = 180      # flush a partial chunk after this much real time
+min_chunk_secs = 2       # shorter than this is not worth transcribing
+
+[whisper]
+model = "~/.local/share/stormnet/models/ggml-medium.en.bin"
+timeout = 300
+# Seeding the decoder with local callsigns and place names is the single largest
+# accuracy win on net audio, and it is entirely specific to your area. List the
+# repeater callsigns, the net control station, nearby towns and counties, and
+# the vocabulary spotters actually use.
+vocab_prompt = """
+Amateur radio SKYWARN net on the W0XYZ repeater, net control WX0ABC.
+Callsigns such as W0XYZ, WX0ABC, K0DEF. Locations Wichita, Sedgwick,
+Butler, Harvey, Andover, Derby, Haysville. Spotter reports: hail size,
+wind gusts, wall cloud, rotation, flooding.
+"""
+
+[paths]
+# Runtime state. Keep this on local disk — launchd and cloud-synced folders
+# fight, and captures get large.
+home = "~/.local/share/stormnet"
+
+[notify]
+# How you find out a storm session started. One of:
+#   none     — log only
+#   command  — exec a program, alert JSON on stdin (see docs/notify.md)
+#   webhook  — HTTPS POST of the alert JSON
+#   spool    — atomically drop one JSON file per alert into a directory for
+#              some other process of yours to pick up and delete
+mode = "none"
+
+# mode = "command"
+# command = ["/usr/local/bin/my-notifier", "--from", "stormnet"]
+
+# mode = "webhook"
+# url = "https://example.com/hooks/stormnet"
+
+# mode = "spool"
+# spool_dir = "~/.local/share/my-bot/spool"
+
+source = "storm-net-recorder"   # identifies these alerts to your consumer
+text_max = 3500                 # truncate before handing text off
+
+[tools]
+# Leave these unset to resolve from PATH. Set them if PATH won't have them —
+# launchd in particular starts with a bare PATH.
+# rtl_fm = "/opt/homebrew/bin/rtl_fm"
+# ffmpeg = "/opt/homebrew/bin/ffmpeg"
+# whisper_cli = "/opt/homebrew/bin/whisper-cli"
+# python = "/opt/homebrew/bin/python3.12"

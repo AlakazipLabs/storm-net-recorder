@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Template. Edit the marked values, then:
+
+    cp launchd/com.example.stormnet-watch.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.example.stormnet-watch.plist
+
+  To restart after a config or code change:
+    launchctl kickstart -k gui/$(id -u)/com.example.stormnet-watch
+
+  Notes:
+    - launchd starts with a bare PATH. Either give absolute paths in
+      config.toml's [tools] table, or extend PATH below.
+    - Keep paths.home on local disk. launchd and cloud-synced folders fight,
+      and captures get large.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.example.stormnet-watch</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <!-- EDIT: absolute path to stormnet-watch inside your venv -->
+        <string>/CHANGE/ME/storm-net-recorder/venv/bin/stormnet-watch</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- EDIT: absolute path to your config.toml -->
+        <key>STORMNET_CONFIG</key>
+        <string>/CHANGE/ME/storm-net-recorder/config.toml</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- EDIT: where the daemon's own stdout/stderr go -->
+    <key>StandardOutPath</key>
+    <string>/CHANGE/ME/stormnet/watch.log</string>
+    <key>StandardErrorPath</key>
+    <string>/CHANGE/ME/stormnet/watch.log</string>
+</dict>
+</plist>

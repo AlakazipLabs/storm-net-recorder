@@ -1,0 +1,35 @@
+# YOUR configuration — contains your location, your contact address, and your
+# local callsign vocabulary. The example is committed; your real one never is.
+config.toml
+
+# Virtual environments (including a bare `venv` symlink)
+venv
+venv/
+venv.nosync/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Assistant configuration — never publish
+.claude/
+
+# Captured audio, transcripts, runtime state
+captures/
+transcripts/
+state/
+*.raw
+*.wav
+*.mp3
+*.bin
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
