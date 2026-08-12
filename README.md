@@ -81,11 +81,28 @@ pip install .
 
 cp config.example.toml config.toml
 $EDITOR config.toml          # your point, your repeater, your contact address
-stormnet-watch --check       # validates config and resolves tools, then exits
 ```
 
-`--check` is the whole pre-flight: it will tell you if your coordinates are missing, your
-webhook is not HTTPS, or `whisper-cli` is not where you think it is.
+Fetch a Whisper model once (`medium.en` is 1.5 GB and is what this was tuned against;
+`small.en` is 466 MB and noticeably worse on weak net audio):
+
+```bash
+mkdir -p ~/.local/share/stormnet/models
+curl -L -o ~/.local/share/stormnet/models/ggml-medium.en.bin \
+  https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-medium.en.bin
+```
+
+Then confirm you are actually ready:
+
+```bash
+stormnet-watch --check
+```
+
+`--check` is the whole pre-flight. It validates the config, resolves `rtl_fm`, `ffmpeg`
+and `whisper-cli`, and confirms the model file and the recorder script are both really
+there — exiting non-zero with a `NOT READY` list if anything is missing. Run it now, on a
+clear day. The alternative is discovering a missing piece while a tornado warning is
+active, which is the failure mode this whole project exists to avoid.
 
 ## Configuration
 
