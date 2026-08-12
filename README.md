@@ -207,6 +207,11 @@ python3 -m unittest discover -s tests
 
 Fully mocked: no network, no SDR, no whisper, no ffmpeg.
 
+## Contact
+
+Issues and pull requests are welcome. For anything that does not belong in a
+public issue: **github@youngnetwork.org**
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
