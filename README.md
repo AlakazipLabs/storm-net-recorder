@@ -73,7 +73,7 @@ swallowed. Losing an alert is bad; crashing the watcher mid-storm is worse.
 ## Setup
 
 ```bash
-git clone https://github.com/young9898/storm-net-recorder.git
+git clone https://github.com/AlakazipLabs/storm-net-recorder.git
 cd storm-net-recorder
 python3 -m venv venv
 source venv/bin/activate

@@ -22,7 +22,7 @@ dependencies = []
 tools = ["numpy"]
 
 [project.urls]
-Homepage = "https://github.com/young9898/storm-net-recorder"
+Homepage = "https://github.com/AlakazipLabs/storm-net-recorder"
 
 [project.scripts]
 stormnet-watch = "stormnet.watch:main"
